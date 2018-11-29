@@ -1,0 +1,29 @@
+Draw function (basically) (assuming using an array) (see lecture 6 slides) 
+
+ 
+
+http://www.cplusplus.com/reference/vector/vector/push_back/ 
+
+ 
+
+ 
+
+Possible function to use in print(): 
+
+http://www.cplusplus.com/reference/string/to_string/ 
+
+ 
+
+Able to rework this based on the size of the array?? Like using length(), .size, or strlen() or something? 
+
+void printArray(const int* list, int size){  for (int i = 0; i < size; i++)    cout << list[i] << " ";} 
+
+ 
+
+ 
+
+For Zack: 
+
+Random note: don’t forget the “break;” statements in any of the switch code blocks 
+
+Random note 2: gameState and player.state are ENUMs. Forgot the word.
