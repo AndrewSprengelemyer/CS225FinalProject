@@ -39,41 +39,47 @@ void DeckOfCards::shuffle()
 {
 	int row = 0;
 	int column = 0;
-
 	for (int card = 1; card <= 260; card++)
 	{
 		do
 		{
 			do
 			{
-				column = 0 + rand() / (RAND_MAX / (64 - 0 + 1) + 1);
+				row = 0 + rand() / (RAND_MAX / (3 - 0 + 1) + 1);
+				do
+				{
+					column = 0 + rand() / (RAND_MAX / (64 - 0 + 1) + 1);
 
-			} while (column > 64);
+				} while (column > 64);
+			} while (row > 3);
 		} while (deck[row][column] != 0);
 		deck[row][column] = card;
-		if (card % 52 == 0 && row != 4)
-		{
-			row++;
-		}
 	}
 }
 
 // setDeck assigns the face and suit to each card in the deck array
 void DeckOfCards::setDeck()
 {
-	cout << "\nStarting Set Deck Func\n";
+	//default values for a normal deck of cards without jokers
 	const char* suit[] = { "H", "D", "C", "S" };
 	const char* face[] = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
 
-	cout << "\n Arrays Made \n";
-
 	string hold = " ";
 
-	cout << "\nHold string made\n";
-	
+	int count = 0;
+
 	for (int card = 1; card <= 260; card++) //260 card = 5 decks
 	{
-		for (int row = 0; row <= 4; row++)
+		hold = " ";
+		//random face and suit
+		int k = 0;
+		int randomPickerR = 0;
+		randomPickerR = 0 + rand() / (RAND_MAX / (3 - 0 + 1) + 1);
+		int randomPickerC = 0;
+		randomPickerC = 0 + rand() / (RAND_MAX / (12 - 0 + 1) + 1);
+
+
+		for (int row = 0; row <= 3; row++)
 		{
 			for (int column = 0; column <= 64; column++)
 			{
@@ -81,58 +87,85 @@ void DeckOfCards::setDeck()
 				{
 					if (deck[row][column] == card) //deck 1 allocate
 					{
-						cout << "\ndeck 1 start\n";
-						hold+=face[column]; //combines the selected face
-						cout << "\n maybeee \n";
-						hold+=suit[row];    //and suit and saves this to
-						playDeck[card] = hold;     //the game deck array
-						cout << "\ndeck 1 end\n";
+						hold+=face[randomPickerC]; //combines the selected face
+						hold += " ";		//(adds space to split card later)
+						hold+=suit[randomPickerR];    //and suit and saves this to
+						playDeck[count] = hold;     //the game deck array
 					}
 				}
 				else if (column > 12 && column <= 25) //deck 2 allocate
 				{
 					if (deck[row][column] == card)
 					{
-						hold+=face[column - 13];
-						hold+=suit[row];
-						playDeck[card] = hold;
+						hold += face[randomPickerC]; //combines the selected face
+						hold += " ";
+						hold += suit[randomPickerR];    //and suit and saves this to
+						playDeck[count] = hold;     //the game deck array
 					}
 				}
 				else if (column > 25 && column <= 38) //deck 3 allocate
 				{
 					if (deck[row][column] == card)
 					{
-						hold.append(face[column - 26]);
-						hold.append(suit[row]);
-						playDeck[card] = hold;
+						hold += face[randomPickerC]; //combines the selected face
+						hold += " ";
+						hold += suit[randomPickerR];    //and suit and saves this to
+						playDeck[count] = hold;     //the game deck array
 					}
 				}
 				else if (column > 38 && column <= 51) //deck 4 allocate
 				{
 					if (deck[row][column] == card)
 					{
-						hold.append(face[column - 39]);
-						hold.append(suit[row]);
-						playDeck[card] = hold;
+						hold += face[randomPickerC]; //combines the selected face
+						hold += " ";
+						hold += suit[randomPickerR];    //and suit and saves this to
+						playDeck[count] = hold;     //the game deck array
 					}
 				}
 				else //deck 5 allocate
 				{
 					if (deck[row][column] == card)
 					{
-						hold.append(face[column - 52]);
-						hold.append(suit[row]);
-						playDeck[card] = hold;
+						hold += face[randomPickerC]; //combines the selected face
+						hold += " ";
+						hold += suit[randomPickerR];    //and suit and saves this to
+						playDeck[count] = hold;     //the game deck array
 					}
 				}
 			}
 		}
+		count++;
 	}
 }
 
-// returns and array of strings whose elements are individual cards. Each card taken will remove that one from the array.
-string DeckOfCards::dealCard(int number)
+// returns an array of strings whose elements are individual cards. Each card taken will remove that one from the array. Basically you get a hand with the amount of cards you wanted in it.
+string * DeckOfCards::dealCard(int number)
 {
-	string help = "TESTING";
-	return help;
+	static string outputArray[260];
+	int i = 0;
+	int amount = 0;
+	int numberSaved = 0;
+	amount = number; 
+	for (i = 0; i < 260; i++)
+	{
+		if (playDeck[i] == "E")
+		{
+			//no array element...move to next array element
+		}
+		else
+		{
+			//anything else, save that string to the output array, set drawn card slot to empty
+			outputArray[numberSaved] = playDeck[i];
+			numberSaved++;
+			playDeck[i] = "E";
+		}
+		if (amount == (numberSaved))
+		{
+			//break loop if amount == our total cards drawn. (Amount is the amount of cards inputted to function that user wants to be draw)
+			i = 1000;
+			break;
+		}
+	}
+	return outputArray;
 }

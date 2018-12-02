@@ -11,10 +11,11 @@ class DeckOfCards
 public:
 	DeckOfCards();
 	void shuffle();
-	string dealCard(int);
+	string * dealCard(int);
 	void resetDeck();
 	void setDeck();
+	string playDeck[260];
+	static string outputArray[260];
 private:
 	int deck[4][65];
-	string playDeck[260];
 };
